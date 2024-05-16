@@ -1,0 +1,101 @@
+// -- Lorsqu'un étudiant se connecte
+{
+    "menu": {
+        "Profil": "/etudiants/{id}/",
+
+        "cours": {
+            "afficherTous": "/cours/",
+            "afficherUn": "/cours/{id}/",
+            "historique": "/cours/historique/",
+            "emploisDuTemps": "/cours/ept/"
+        },
+        "notes": {
+            "afficherToutes": "/notes/",
+            "afficherUne": "/notes/{id}/",
+            "bulletin": "/notes/bulletin/"
+        }
+    }
+}
+
+// -- Lorsqu'un enseignant se connecte
+{
+    "menu": {
+        "Etudiants": {
+            "afficherTous": "/etudiants",
+            "afficherUn": "/etudiants/{id}",
+            "ajouter": "/etudiants/ajouter",
+            "modifier": "/etudiants/modifier/{id}",
+            "supprimer": "/etudiants/supprimer/{id}"
+        },
+        "Enseignants": {
+            "afficherTous": "/enseignants",
+            "afficherUn": "/enseignants/{id}",
+            "ajouter": "/enseignants/ajouter",
+            "modifier": "/enseignants/modifier/{id}",
+            "supprimer": "/enseignants/supprimer/{id}"
+        },
+        "Cours": {
+            "afficherTous": "/cours",
+            "afficherUn": "/cours/{id}",
+            "ajouter": "/cours/ajouter",
+            "modifier": "/cours/modifier/{id}",
+            "supprimer": "/cours/supprimer/{id}"
+        },
+        "Notes": {
+            "afficherToutes": "/notes/",
+            "afficherUne": "/notes/{id}/",
+            "ajouter": "/notes/ajouter",
+            "modifier": "/notes/modifier/{id}",
+            "supprimer": "/notes/supprimer/{id}"
+        },
+        "Classes": {
+            "afficherToutes": "/classes",
+            "afficherUne": "/classes/{id}",
+            "ajouter": "/classes/ajouter",
+            "modifier": "/classes/modifier/{id}",
+            "supprimer": "/classes/supprimer/{id}"
+        }
+    }
+}
+
+
+// -- Lorsqu'un admin se connecte
+{
+    "menu": {
+        "etudiants": {
+            "afficherTous": "/etudiants",
+            "afficherUn": "/etudiants/{id}",
+            "ajouter": "/etudiants/ajouter",
+            "modifier": "/etudiants/modifier/{id}",
+            "supprimer": "/etudiants/supprimer/{id}"
+        },
+        "enseignants": {
+            "afficherTous": "/enseignants",
+            "afficherUn": "/enseignants/{id}",
+            "ajouter": "/enseignants/ajouter",
+            "modifier": "/enseignants/modifier/{id}",
+            "supprimer": "/enseignants/supprimer/{id}"
+        },
+        "cours": {
+            "afficherTous": "/cours",
+            "afficherUn": "/cours/{id}",
+            "ajouter": "/cours/ajouter",
+            "modifier": "/cours/modifier/{id}",
+            "supprimer": "/cours/supprimer/{id}"
+        },
+        "notes": {
+            "afficherToutes": "/notes/",
+            "afficherUne": "/notes/{id}/",
+            "ajouter": "/notes/ajouter",
+            "modifier": "/notes/modifier/{id}",
+            "supprimer": "/notes/supprimer/{id}"
+        },
+        "classes": {
+            "afficherToutes": "/classes",
+            "afficherUne": "/classes/{id}",
+            "ajouter": "/classes/ajouter",
+            "modifier": "/classes/modifier/{id}",
+            "supprimer": "/classes/supprimer/{id}"
+        }
+    }
+}
