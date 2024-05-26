@@ -33,6 +33,9 @@
             
         }
     }
+    if (isset($_SESSION['user']) && isset($_SESSION['utype'])) {
+        header('Location: /be_web/dashboard.php');
+    }
 ?>
 
 <!DOCTYPE html>
