@@ -10,17 +10,17 @@
             z-index: 9999; /* Assurez-vous que le ruban flottant est au-dessus de tous les autres éléments */
         }
 </style>
-			<!DOCTYPE html>
-			<html>
-			<head>
-			    <meta charset="utf-8">
-			    <meta name="viewport" content="width=device-width, initial-scale=1">
-			    <title>Enseignants</title>
-			    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-			</head>
-			<body>
-				<!-- Header Logout -->
-				<?php require_once '../header.php'; ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Enseignants</title>
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+</head>
+<body>
+	<!-- Header Logout -->
+	<?php require_once '../header.php'; ?>
 
 <?php
     if (isset($_SESSION['user']) && isset($_SESSION['utype'])) {

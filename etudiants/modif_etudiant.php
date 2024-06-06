@@ -6,69 +6,7 @@
     <title>Modifier un Enseignant</title>
     <link rel="stylesheet" type="text/css" href="/be_web/bootstrap.min.css">
     <script type="text/javascript" src="/be_web/bootstrap.bundle.min.js"></script>
-    <style>
-        #body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .form-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-        .form-container h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #555;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .form-group button:hover {
-            background-color: #218838;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/be_web/index.css">
 </head>
 <body>
     <!-- Header Logout -->
@@ -89,6 +27,7 @@
             // Récupérer le code de l'étudiant à modifier depuis l'URL
             if(isset($_GET['inputMat'])) {
                 $code_etu = htmlspecialchars($_GET['inputMat']);
+                $etudiant=null;
                 
                 // Récupérer les données de l'étudiant depuis la base de données
                 try {
@@ -116,6 +55,7 @@
                         $lieu_naiss = $etudiant['Lieu_naiss'];
                     } else {
                         $message = "Étudiant non trouvé.";
+                        include '../flottant_error.php';
                         exit();
                     }
     
@@ -165,7 +105,8 @@
     
             // Exécuter la déclaration
             if ($stmt->execute()) {
-                include 'flottant_succes2.html';
+                $message="Étudiant modifié avec succès";
+                include '../flottant_succes.php';
                 exit();
                 
             } else {

@@ -64,7 +64,7 @@ if (isset($_SESSION['user']) && isset($_SESSION['utype'])) {
 
             // Récupérer le code de l'enseignant à supprimer depuis le formulaire soumis
             if(isset($_GET['inputMat'])) {
-                $enseignant_code = $_GET['inputMat'];
+                $enseignant_code = htmlspecialchars($_GET['inputMat']);
 
                 // Préparer une déclaration DELETE pour supprimer l'enseignant de la base de données
                 $stmt = $pdo->prepare("DELETE FROM ENSEIGNANT WHERE Code_ens = :inputMat");
@@ -78,7 +78,7 @@ if (isset($_SESSION['user']) && isset($_SESSION['utype'])) {
                             <div class="card mt-5">
                                 <img src="checked.png" alt="Checked" class="checked-icon">
                                 <div class="card-body">
-                                    Enseignant modifié avec succès
+                                    Enseignant supprimé avec succès
                                 </div>
                             </div>
                         </div>

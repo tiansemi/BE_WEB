@@ -1,6 +1,7 @@
 <?php 
 	$host = 'localhost';
-    $db   = 'be_web';
+    // $db   = 'be_web';
+    $db   = 'be_web2';
     $user = 'tiansemi';
     $pass = '*ù$ù*ù$ù';
     $charset = 'utf8mb4';

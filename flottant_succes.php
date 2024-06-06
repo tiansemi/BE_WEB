@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Redirection</title>
+    <link rel="stylesheet" type="text/css" href="/be_web/bootstrap.min.css">
+    <script type="text/javascript" src="/be_web/bootstrap.bundle.min.js"></script>
+    <style>
+        #body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 300px;
+            text-align: center;
+            position: relative; /* Add this line */
+        }
+
+        .checked-icon {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: -25px;
+            left: calc(50% - 25px);
+        }
+
+        .card-body {
+            font-size: 18px;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="body">
+        <div class="card mt-5">
+            <img src="/be_web/checked.png" alt="Checked" class="checked-icon">
+            <div class="card-body">
+                <?php echo $message; ?>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Attendre 2 secondes avant de rediriger vers le fichier HTML
+        setTimeout(function() {
+            window.location.href = "index.php";
+        }, 2000);
+    </script>
+</body>
+</html>

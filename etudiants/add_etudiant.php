@@ -7,69 +7,7 @@
     <link rel="stylesheet" href="/be_web/fontawesome.all.min.css">
     <link rel="stylesheet" type="text/css" href="/be_web/bootstrap.min.css">
     <script type="text/javascript" src="/be_web/bootstrap.bundle.min.js"></script>
-    <style>
-        #body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .form-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-        .form-container h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #555;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .form-group button:hover {
-            background-color: #218838;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/be_web/index.css">
 </head>
 <body>
     <!-- Header Logout -->
@@ -101,8 +39,11 @@
                     $pdo = new PDO($dsn, $user, $pass, $opt);
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+                    // Début de la transaction
+                    $pdo->beginTransaction();
+
                     // Préparer une déclaration INSERT pour ajouter un nouvel étudiant dans la base de données
-                    $stmt = $pdo->prepare("INSERT INTO ETUDIANT (Matricule, c_cl, Nom, Prenom, Date_naiss,  Lieu_naiss, password) VALUES (:code, :c_cl, :nom, :prenoms, :date_naiss, :lieu_naiss, :password)");
+                    $stmt = $pdo->prepare("INSERT INTO ETUDIANT (Matricule, c_cl, Nom, Prenom, Date_naiss, Lieu_naiss, password) VALUES (:code, :c_cl, :nom, :prenoms, :date_naiss, :lieu_naiss, :password)");
                     $stmt->bindParam(':code', $code);
                     $stmt->bindParam(':c_cl', $c_cl);
                     $stmt->bindParam(':nom', $nom);
@@ -113,9 +54,19 @@
 
                     // Exécuter la déclaration
                     if ($stmt->execute()) {
+                        // Incrémenter l'effectif de la classe
+                        $updateStmt = $pdo->prepare("UPDATE CLASSE SET Effectif = Effectif + 1 WHERE Code_cl = :c_cl");
+                        $updateStmt->bindParam(':c_cl', $c_cl);
+                        $updateStmt->execute();
+
+                        // Valider la transaction
+                        $pdo->commit();
+
                         include 'flottant_succes.html';
                         exit();
                     } else {
+                        // Annuler la transaction en cas d'erreur
+                        $pdo->rollBack();
                         $message = "Erreur lors de l'ajout de l'étudiant.";
                     }
 
@@ -124,6 +75,9 @@
                     $pdo = null;
 
                 } catch (PDOException $e) {
+                    // Annuler la transaction en cas d'exception
+                    $pdo->rollBack();
+
                     if ($e->getCode() == 23000) {
                         // Gérer spécifiquement les violations de contrainte d'intégrité
                         echo "<script> alert(\"Erreur : Matricule de l'étudiant déjà utilisé.\"); </script>";
@@ -160,7 +114,7 @@
 
     <div id="body">
         <div class="form-container mt-2 mb-3">
-            <h2>Ajouter un Enseignant</h2>
+            <h2>Ajouter un Etudiant</h2>
             <form method="post" action="">
                 <div class="form-group">
                     <label for="code">Matricule/Code :</label>
@@ -188,18 +142,21 @@
                     <!-- Icône d'œil -->
                     <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer; display: initial;" onclick="togglePassword()"></i>
                 </div>
-                <label for="c_cl">Code de la classe:</label>
-                <select id="c_cl" name="c_cl" required>
-                  <option value="">Choisir une classe</option>
-                  <?php foreach ($classes as $class): ?>
-                      <option value="<?php echo htmlspecialchars($class['Code_cl']); ?>">
-                          <?php echo htmlspecialchars($class['Code_cl']); ?>
-                      </option>
-                  <?php endforeach; ?>
-                </select>
-                <a href="/be_web/classes/add_classe.php" style="text-decoration: none;"><br>Ajouter une nouvelle classe</a>
+                <div class="form-group" style="margin-bottom: 0px;">
+                    <label for="c_cl">Code de la classe:</label>
+                    <select id="c_cl" name="c_cl" required>
+                      <option value="">Choisir une classe</option>
+                      <?php foreach ($classes as $class): ?>
+                          <option value="<?php echo htmlspecialchars($class['Code_cl']); ?>">
+                              <?php echo htmlspecialchars($class['Code_cl']); ?>
+                          </option>
+                      <?php endforeach; ?>
+                    </select>
+                    
+                </div>
+                <a href="/be_web/classes/add_classe.php" style="text-decoration: none;">Ajouter une nouvelle classe </a>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 15px;">
                     <button type="submit">Ajouter</button>
                 </div>
             </form>

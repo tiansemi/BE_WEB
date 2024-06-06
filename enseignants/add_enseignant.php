@@ -7,76 +7,13 @@
     <link rel="stylesheet" href="/be_web/fontawesome.all.min.css">
     <link rel="stylesheet" type="text/css" href="/be_web/bootstrap.min.css">
     <script type="text/javascript" src="/be_web/bootstrap.bundle.min.js"></script>
-    <style>
-        #body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .form-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-        .form-container h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: #555;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .form-group button:hover {
-            background-color: #218838;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../index.css">
 </head>
 <body>
     <!-- Header Logout -->
-    <?php if ($_SERVER["REQUEST_METHOD"] != "POST" && !isset($_GET['prenoms'])) {require_once '../header.php';} ?>
+    <?php require_once '../header.php'; ?>
 
 <?php
-    if (!isset($_SESSION)) {session_start();}
     $message = "";
 
     if (isset($_SESSION['user']) && isset($_SESSION['utype'])) {

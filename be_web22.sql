@@ -1,0 +1,89 @@
+DROP TABLE IF EXISTS `CLASSE`;
+CREATE TABLE `CLASSE` (
+  `Code_cl` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `c_fil` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Libelle` varchar(223) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `Effectif` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Code_cl`),
+  KEY `c_fil` (`c_fil`),
+  CONSTRAINT `CLASSE_ibfk_1` FOREIGN KEY (`c_fil`) REFERENCES `FILIERE` (`Code_fil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+LOCK TABLES `CLASSE` WRITE;
+INSERT INTO `CLASSE` VALUES ('ISTICB','STIC01','ING STIC 1 B',2);
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `COURS`;
+CREATE TABLE `COURS` (
+  `Code_cours` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `c_ens` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Intitule` varchar(44) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Coefficient` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`Code_cours`),
+  KEY `c_ens` (`c_ens`),
+  CONSTRAINT `COURS_ibfk_1` FOREIGN KEY (`c_ens`) REFERENCES `ENSEIGNANT` (`Code_ens`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+LOCK TABLES `COURS` WRITE;
+INSERT INTO `COURS` VALUES ('PYTH','ENS0001','LANGUAGE PYTHON',1);
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `ENSEIGNANT`;
+CREATE TABLE `ENSEIGNANT` (
+  `Code_ens` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Nom` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Prenom` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Contact` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `password` varchar(223) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  PRIMARY KEY (`Code_ens`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+LOCK TABLES `ENSEIGNANT` WRITE;
+INSERT INTO `ENSEIGNANT` VALUES ('ENS0000','admin','admin','0000','c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec','ad'),('ENS0001','DIGBEU','GASPARD','0101010101','b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86','pp');
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `ETUDIANT`;
+CREATE TABLE `ETUDIANT` (
+  `Matricule` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `c_cl` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Nom` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Prenom` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Date_naiss` date NOT NULL,
+  `Lieu_naiss` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `password` varchar(223) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  PRIMARY KEY (`Matricule`),
+  KEY `c_cl` (`c_cl`),
+  CONSTRAINT `ETUDIANT_ibfk_1` FOREIGN KEY (`c_cl`) REFERENCES `CLASSE` (`Code_cl`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+
+LOCK TABLES `ETUDIANT` WRITE;
+INSERT INTO `ETUDIANT` VALUES ('20INP00750','ISTICB','KOFFI','AHEBE','2000-02-02','KOUMASSI','b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86'),('23INP00005','ISTICB','MOULO','OHOLO','2000-01-01','Guiglo','b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86');
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `FILIERE`;
+CREATE TABLE `FILIERE` (
+  `Code_fil` char(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Libelle_fil` varchar(223) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  PRIMARY KEY (`Code_fil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+LOCK TABLES `FILIERE` WRITE;
+INSERT INTO `FILIERE` VALUES ('STIC01','ING STIC');
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `SUIVRE`;
+CREATE TABLE `SUIVRE` (
+  `Matricule` char(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Code_cours` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `Notes` float DEFAULT NULL,
+  `Date_ob` datetime NOT NULL,
+  PRIMARY KEY (`Matricule`,`Code_cours`),
+  KEY `SUIVRE_ibfk_2` (`Code_cours`),
+  CONSTRAINT `SUIVRE_ibfk_1` FOREIGN KEY (`Matricule`) REFERENCES `ETUDIANT` (`Matricule`),
+  CONSTRAINT `SUIVRE_ibfk_2` FOREIGN KEY (`Code_cours`) REFERENCES `COURS` (`Code_cours`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+LOCK TABLES `SUIVRE` WRITE;
+UNLOCK TABLES;
